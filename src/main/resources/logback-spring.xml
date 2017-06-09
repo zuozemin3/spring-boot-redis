@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+  <logger name="org.springframework.web" level="INFO"/>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>/logs/spring-boot-redis/app.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>/logs/spring-boot-redis/app.%d{yyyy-MM-dd}.log</FileNamePattern>
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <Pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+    </encoder>
+  </appender>
+
+  <springProfile name="dev">
+    <logger name="com.zzm.Application" level="DEBUG"/>
+    <root>
+      <appender-ref ref="FILE"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="qa">
+    <logger name="com.zzm.Application" level="INFO"/>
+  </springProfile>
+
+  <springProfile name="prod">
+    <logger name="com.zzm.Application" level="ERROR"/>
+  </springProfile>
+
+
+</configuration>
